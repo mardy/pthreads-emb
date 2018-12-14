@@ -52,7 +52,7 @@ pthread_t
 pte_new (void)
 {
   pthread_t t;
-  pthread_t nil = {NULL, 0};
+  pthread_t nil = NULL;
   pte_thread_t * tp;
 
   /*
@@ -60,9 +60,9 @@ pte_new (void)
    */
   t = pte_threadReusePop ();
 
-  if (NULL != t.p)
+  if (NULL != t)
     {
-      tp = (pte_thread_t *) t.p;
+      tp = (pte_thread_t *) t;
     }
   else
     {
@@ -75,8 +75,7 @@ pte_new (void)
         }
 
       /* ptHandle.p needs to point to it's parent pte_thread_t. */
-      t.p = tp->ptHandle.p = tp;
-      t.x = tp->ptHandle.x = 0;
+      t = tp->ptHandle = tp;
     }
 
   /* Set default state. */

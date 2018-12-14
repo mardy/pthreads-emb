@@ -53,7 +53,7 @@
 static void
 pte_threadDestroyCommon (pthread_t thread, unsigned char shouldThreadExit)
 {
-  pte_thread_t * tp = (pte_thread_t *) thread.p;
+  pte_thread_t * tp = (pte_thread_t *) thread;
   pte_thread_t threadCopy;
 
   if (tp != NULL)
@@ -98,4 +98,3 @@ void pte_threadExitAndDestroy (pthread_t thread)
 {
   pte_threadDestroyCommon(thread,1);
 }
-

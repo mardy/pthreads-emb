@@ -386,19 +386,7 @@ enum
 #undef SEM_VALUE_MAX
 #define SEM_VALUE_MAX                           INT_MAX
 
-
-    /*
-     * Generic handle type - intended to extend uniqueness beyond
-     * that available with a simple pointer. It should scale for either
-     * IA-32 or IA-64.
-     */
-    typedef struct
-      {
-        void * p;                   /* Pointer to actual object */
-        unsigned int x;             /* Extra information - reuse count etc */
-      } pte_handle_t;
-
-    typedef pte_handle_t pthread_t;
+    typedef void * pthread_t;
     typedef struct pthread_attr_t_ * pthread_attr_t;
     typedef struct pthread_once_t_ pthread_once_t;
     typedef struct pthread_key_t_ * pthread_key_t;
