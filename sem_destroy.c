@@ -52,7 +52,6 @@
 
 #include "pte_osal.h"
 
-#include "pthread.h"
 #include "semaphore.h"
 #include "implement.h"
 

@@ -32,7 +32,7 @@
 #include <string.h>
 #include <pspkerror.h>
 #include "pte_osal.h"
-#include "pthread.h"
+#include "pte_pthread.h"
 #include "tls-helper.h"
 
 /* For ftime */

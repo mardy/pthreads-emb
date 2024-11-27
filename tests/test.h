@@ -48,9 +48,9 @@
 #include <stdlib.h>
 
 #include "pte_osal.h"
+#include "pte_pthread.h"
+#include "pte_sched.h"
 
-#include "pthread.h"
-#include "sched.h"
 #include "semaphore.h"
 
 //#include <windows.h>

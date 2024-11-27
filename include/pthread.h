@@ -181,15 +181,6 @@
 #include <setjmp.h>
 #include <limits.h>
 
-/*
- * Boolean values to make us independent of system includes.
- */
-enum
-{
-  PTE_FALSE = 0,
-  PTE_TRUE = (! PTE_FALSE)
-};
-
 
     /*
      * -------------------------------------------------------------
@@ -351,12 +342,6 @@ enum
      *                      (must be at least 32767)
      *
      */
-#undef _POSIX_THREAD_DESTRUCTOR_ITERATIONS
-#define _POSIX_THREAD_DESTRUCTOR_ITERATIONS     4
-
-#undef PTHREAD_DESTRUCTOR_ITERATIONS
-#define PTHREAD_DESTRUCTOR_ITERATIONS           _POSIX_THREAD_DESTRUCTOR_ITERATIONS
-
 #undef _POSIX_THREAD_KEYS_MAX
 #define _POSIX_THREAD_KEYS_MAX                  128
 
@@ -527,17 +512,6 @@ enum
       PTHREAD_MUTEX_DEFAULT = PTHREAD_MUTEX_NORMAL
     };
 
-
-    typedef struct pte_cleanup_t pte_cleanup_t;
-
-    typedef void (*  pte_cleanup_callback_t)(void *);
-
-    struct pte_cleanup_t
-      {
-        pte_cleanup_callback_t routine;
-        void *arg;
-        struct pte_cleanup_t *prev;
-      };
 
 #ifdef PTE_CLEANUP_C
 

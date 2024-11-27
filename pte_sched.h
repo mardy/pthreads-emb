@@ -1,7 +1,9 @@
 /*
+ *      Pthreads-embedded (PTE) - POSIX Threads Library for embedded systems
+ *      Copyright(C) 2008 Jason Schmidlapp
  *
+ *      Contact Email: jschmidlapp@users.sourceforge.net
  *
- * --------------------------------------------------------------------------
  *
  *      Pthreads-embedded (PTE) - POSIX Threads Library for embedded systems
  *      Copyright(C) 2008 Jason Schmidlapp
@@ -35,38 +37,10 @@
  *      License along with this library in the file COPYING.LIB;
  *      if not, write to the Free Software Foundation, Inc.,
  *      59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
- *
  */
+#ifndef PTE_SCHED_H
+#define PTE_SCHED_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "benchtest.h"
-#include "implement.h"
+#include <sched.h>
 
-void
-dummy_call(int * a)
-{
-}
-
-void
-interlocked_inc_with_conditionals(int * a)
-{
-  if (a != NULL)
-    if (PTE_ATOMIC_INCREMENT(a) == -1)
-      {
-        *a = 0;
-      }
-}
-
-void
-interlocked_dec_with_conditionals(int * a)
-{
-  if (a != NULL)
-    if (PTE_ATOMIC_DECREMENT(a) == -1)
-      {
-        *a = 0;
-      }
-}
-
-
-/****************************************************************************************/
+#endif /* PTE_SCHED_H */

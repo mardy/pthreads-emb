@@ -43,7 +43,6 @@
 
 #include <pte_osal.h>
 
-#include "pthread.h"
 #include "implement.h"
 
 int

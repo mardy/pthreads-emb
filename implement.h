@@ -51,11 +51,12 @@
 #ifndef _IMPLEMENT_H
 #define _IMPLEMENT_H
 
+#include "pte_pthread.h"
 #include "pte_osal.h"
 
 /* use local include files during development */
 #include "semaphore.h"
-#include "sched.h"
+#include "pte_sched.h"
 
 
 typedef enum

@@ -1,10 +1,12 @@
-/*
- * pthread_spin_init.c
- *
- * Description:
- * This translation unit implements spin lock primitives.
+/* This is an implementation of the threads API of POSIX 1003.1-2001.
  *
  * --------------------------------------------------------------------------
+ *
+ *      Pthreads-embedded (PTE) - POSIX Threads Library for embedded systems
+ *      Copyright(C) 2008 Jason Schmidlapp
+ *
+ *      Contact Email: jschmidlapp@users.sourceforge.net
+ *
  *
  *      Pthreads-embedded (PTE) - POSIX Threads Library for embedded systems
  *      Copyright(C) 2008 Jason Schmidlapp
@@ -39,92 +41,43 @@
  *      if not, write to the Free Software Foundation, Inc.,
  *      59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
+#ifndef PTE_PTHREAD_H
+#define PTE_PTHREAD_H
 
-#include <stdlib.h>
+#define _POSIX_THREADS 200809L
+#define _POSIX_READER_WRITER_LOCKS    200809L
+#define _POSIX_SPIN_LOCKS 200809L
+#include <pthread.h>
 
-#include "implement.h"
+#ifndef PTHREAD_STACK_MIN
+#define PTHREAD_STACK_MIN 0
+#endif
 
+#undef _POSIX_THREAD_DESTRUCTOR_ITERATIONS
+#define _POSIX_THREAD_DESTRUCTOR_ITERATIONS     4
 
-int
-pthread_spin_init (pthread_spinlock_t * lock, int pshared)
+#undef PTHREAD_DESTRUCTOR_ITERATIONS
+#define PTHREAD_DESTRUCTOR_ITERATIONS           _POSIX_THREAD_DESTRUCTOR_ITERATIONS
+
+/*
+ * Boolean values to make us independent of system includes.
+ */
+enum
 {
-  pthread_spinlock_t s;
-  int cpus = 0;
-  int result = 0;
+  PTE_FALSE = 0,
+  PTE_TRUE = (! PTE_FALSE)
+};
 
-  if (lock == NULL)
-    {
-      return EINVAL;
-    }
 
-  if (0 != pte_getprocessors (&cpus))
-    {
-      cpus = 1;
-    }
+typedef struct pte_cleanup_t pte_cleanup_t;
 
-  if (cpus > 1)
-    {
-      if (pshared == PTHREAD_PROCESS_SHARED)
-        {
-          /*
-           * Creating spinlock that can be shared between
-           * processes.
-           */
-#if _POSIX_THREAD_PROCESS_SHARED >= 0
+typedef void (*  pte_cleanup_callback_t)(void *);
 
-          /*
-           * Not implemented yet.
-           */
+struct pte_cleanup_t
+  {
+    pte_cleanup_callback_t routine;
+    void *arg;
+    struct pte_cleanup_t *prev;
+  };
 
-#error ERROR [__FILE__, line __LINE__]: Process shared spin locks are not supported yet.
-
-#else
-
-          return ENOSYS;
-
-#endif /* _POSIX_THREAD_PROCESS_SHARED */
-
-        }
-    }
-
-  s = (pthread_spinlock_t) calloc (1, sizeof (*s));
-
-  if (s == NULL)
-    {
-      return ENOMEM;
-    }
-
-  if (cpus > 1)
-    {
-      s->u.cpus = cpus;
-      s->interlock = PTE_SPIN_UNLOCKED;
-    }
-  else
-    {
-      pthread_mutexattr_t ma;
-      result = pthread_mutexattr_init (&ma);
-
-      if (0 == result)
-        {
-          ma->pshared = pshared;
-          result = pthread_mutex_init (&(s->u.mutex), &ma);
-          if (0 == result)
-            {
-              s->interlock = PTE_SPIN_USE_MUTEX;
-            }
-        }
-      (void) pthread_mutexattr_destroy (&ma);
-    }
-
-  if (0 == result)
-    {
-      *lock = s;
-    }
-  else
-    {
-      (void) free (s);
-      *lock = NULL;
-    }
-
-  return (result);
-}
+#endif /* PTE_PTHREAD_H */

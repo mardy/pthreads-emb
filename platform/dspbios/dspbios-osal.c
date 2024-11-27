@@ -34,10 +34,9 @@
 #include <lck.h>
 #include <mbx.h>
 
-#include <pthread.h>
-
 #include "tls-helper.h"
 #include "pte_osal.h"
+#include "pte_pthread.h"
 
 #define POLLING_DELAY_IN_ticks 10
 
