@@ -41,11 +41,13 @@
  *      59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "pte_osal.h"
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "implement.h"
+
+#include "pte_osal.h"
 
 int
 pthread_create (pthread_t * tid,
