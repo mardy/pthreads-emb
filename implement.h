@@ -108,6 +108,7 @@ int implicit:
     void *nextAssoc;
   };
 
+#define PTE_THREAD(t) ((pte_thread_t *)t)
 
 /*
  * Special value to mark attribute objects as valid.
@@ -220,6 +221,8 @@ struct pthread_key_t_
     void *threads;
   };
 
+#define PTE_KEY(k) ((struct pthread_key_t_*)k)
+#define PTE_KEY_TO_PTHREAD(k) ((pthread_key_t)k)
 
 typedef struct ThreadParms ThreadParms;
 typedef struct ThreadKeyAssoc ThreadKeyAssoc;
@@ -248,6 +251,8 @@ struct pthread_cond_t_
     pthread_cond_t prev;
   };
 
+#define PTE_COND(k) ((pthread_cond_t_ *)k)
+#define PTE_COND_TO_PTHREAD(k) ((pthread_cond_t)k)
 
 struct pthread_condattr_t_
   {

@@ -75,11 +75,11 @@ pte_callUserDestroyRoutines (pthread_t thread)
 {
   ThreadKeyAssoc * assoc;
 
-  if (thread != NULL)
+  pte_thread_t * sp = PTE_THREAD(thread);
+  if (sp != NULL)
     {
       int assocsRemaining;
       int iterations = 0;
-      pte_thread_t * sp = (pte_thread_t *) thread;
 
       /*
        * Run through all Thread<-->Key associations
@@ -107,7 +107,7 @@ pte_callUserDestroyRoutines (pthread_t thread)
           for (;;)
             {
               void * value;
-              pthread_key_t k;
+              struct pthread_key_t_ *k;
               void (*destructor) (void *);
 
               /*
@@ -135,7 +135,7 @@ pte_callUserDestroyRoutines (pthread_t thread)
                    * If we fail, we need to relinquish the first lock and the
                    * processor and then try to acquire them all again.
                    */
-                  if (pthread_mutex_trylock(&(assoc->key->keyLock)) == EBUSY)
+                  if (pthread_mutex_trylock(&(PTE_KEY(assoc->key)->keyLock)) == EBUSY)
                     {
                       pthread_mutex_unlock(&(sp->threadLock));
                       pte_osThreadSleep(1); // Ugly but necessary to avoid priority effects.
@@ -159,7 +159,7 @@ pte_callUserDestroyRoutines (pthread_t thread)
                * key is valid and we can call the destroy
                * routine;
                */
-              k = assoc->key;
+              k = PTE_KEY(assoc->key);
               destructor = k->destructor;
               value = pte_osTlsGetValue(k->key);
               pte_osTlsSetValue (k->key, NULL);

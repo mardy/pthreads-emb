@@ -47,10 +47,10 @@
 int pte_processInitialized = PTE_FALSE;
 pte_thread_t * pte_threadReuseTop = PTE_THREAD_REUSE_EMPTY;
 pte_thread_t * pte_threadReuseBottom = PTE_THREAD_REUSE_EMPTY;
-pthread_key_t pte_selfThreadKey = NULL;
-pthread_key_t pte_cleanupKey = NULL;
-pthread_cond_t pte_cond_list_head = NULL;
-pthread_cond_t pte_cond_list_tail = NULL;
+pthread_key_t pte_selfThreadKey = PTE_KEY_TO_PTHREAD(NULL);
+pthread_key_t pte_cleanupKey = PTE_KEY_TO_PTHREAD(NULL);
+pthread_cond_t pte_cond_list_head = PTE_COND_TO_PTHREAD(NULL);
+pthread_cond_t pte_cond_list_tail = PTE_COND_TO_PTHREAD(NULL);
 
 int pte_concurrency = 0;
 

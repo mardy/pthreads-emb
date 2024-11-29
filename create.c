@@ -104,12 +104,12 @@ pthread_create (pthread_t * tid,
 
   a = attr;
 
-  if ((thread = pte_new ()) == NULL)
+  thread = pte_new ();
+  tp = PTE_THREAD(thread);
+  if (!tp)
     {
       goto FAIL0;
     }
-
-  tp = (pte_thread_t *) thread;
 
   priority = tp->sched_priority;
 
