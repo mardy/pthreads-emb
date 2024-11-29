@@ -126,7 +126,7 @@ pthread_create (pthread_t * tid,
     {
       stackSize = a->stacksize;
       tp->detachState = a->detachstate;
-      priority = a->param.sched_priority;
+      priority = a->schedparam.sched_priority;
 
       if ( (priority > pte_osThreadGetMaxPriority()) ||
            (priority < pte_osThreadGetMinPriority()) )

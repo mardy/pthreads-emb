@@ -121,7 +121,7 @@ struct pthread_attr_t_
     void *stackaddr;
     size_t stacksize;
     int detachstate;
-    struct sched_param param;
+    struct sched_param schedparam;
     int inheritsched;
     int contentionscope;
   };
