@@ -91,7 +91,7 @@ pthread_create (pthread_t * tid,
 {
   pthread_t thread;
   pte_thread_t * tp;
-  register pthread_attr_t a;
+  const pthread_attr_t *a;
   int result = EAGAIN;
   int run = PTE_TRUE;
   ThreadParms *parms = NULL;
@@ -100,14 +100,7 @@ pthread_create (pthread_t * tid,
   pthread_t self;
   pte_osResult osResult;
 
-  if (attr != NULL)
-    {
-      a = *attr;
-    }
-  else
-    {
-      a = NULL;
-    }
+  a = attr;
 
   if ((thread = pte_new ()) == NULL)
     {

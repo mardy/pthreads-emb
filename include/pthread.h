@@ -372,7 +372,7 @@
 #define SEM_VALUE_MAX                           INT_MAX
 
     typedef void * pthread_t;
-    typedef struct pthread_attr_t_ * pthread_attr_t;
+    typedef struct pthread_attr_t_ pthread_attr_t;
     typedef struct pthread_once_t_ pthread_once_t;
     typedef struct pthread_key_t_ * pthread_key_t;
     typedef struct pthread_mutex_t_ * pthread_mutex_t;
